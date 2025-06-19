@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { useUser, SignInButton, UserButton } from '@clerk/nextjs'
-import { supabase } from '@/lib/supabase'
 
 interface TestData {
   id: number
