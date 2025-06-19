@@ -2,10 +2,18 @@
 
 import { useState, useEffect } from 'react'
 import { supabase } from '@/lib/supabase'
+import { User } from '@supabase/supabase-js'
+
+interface TestData {
+  id: number
+  name: string
+  email: string
+  created_at: string
+}
 
 export default function Home() {
-  const [user, setUser] = useState<any>(null)
-  const [testData, setTestData] = useState([])
+  const [user, setUser] = useState<User | null>(null)
+  const [testData, setTestData] = useState<TestData[]>([])
 
   useEffect(() => {
     const checkUser = async () => {
@@ -77,7 +85,7 @@ export default function Home() {
                 <div className="bg-gray-100 p-4 rounded">
                   <h3 className="font-bold mb-2">テストデータ:</h3>
                   <ul>
-                    {testData.map((item: any) => (
+                    {testData.map((item: TestData) => (
                       <li key={item.id} className="mb-2">
                         {item.name} - {item.email}
                       </li>
