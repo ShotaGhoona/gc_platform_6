@@ -1,8 +1,8 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
+import { useUser, SignInButton, UserButton } from '@clerk/nextjs'
 import { supabase } from '@/lib/supabase'
-import { User } from '@supabase/supabase-js'
 
 interface TestData {
   id: number
@@ -12,29 +12,8 @@ interface TestData {
 }
 
 export default function Home() {
-  const [user, setUser] = useState<User | null>(null)
+  const { isSignedIn, user } = useUser()
   const [testData, setTestData] = useState<TestData[]>([])
-
-  useEffect(() => {
-    const checkUser = async () => {
-      const { data: { user } } = await supabase.auth.getUser()
-      setUser(user)
-    }
-    checkUser()
-  }, [])
-
-  const signInWithGoogle = async () => {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-    })
-    if (error) console.error('Error signing in:', error)
-  }
-
-  const signOut = async () => {
-    const { error } = await supabase.auth.signOut()
-    if (error) console.error('Error signing out:', error)
-    setUser(null)
-  }
 
   const fetchTestData = async () => {
     try {
@@ -50,28 +29,30 @@ export default function Home() {
   return (
     <div className="min-h-screen p-8">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-8">朝活管理アプリ</h1>
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-bold">朝活管理アプリ</h1>
+          {isSignedIn ? (
+            <UserButton />
+          ) : (
+            <SignInButton mode="modal">
+              <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                ログイン
+              </button>
+            </SignInButton>
+          )}
+        </div>
         
-        {!user ? (
+        {!isSignedIn ? (
           <div className="space-y-4">
             <h2 className="text-xl mb-4">ログインしてください</h2>
-            <button 
-              onClick={signInWithGoogle}
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-            >
-              Googleでログイン
-            </button>
+            <p className="text-gray-600">
+              アプリを使用するにはログインが必要です。
+            </p>
           </div>
         ) : (
           <div className="space-y-4">
-            <div className="flex justify-between items-center">
-              <h2 className="text-xl">こんにちは、{user.email}さん</h2>
-              <button 
-                onClick={signOut}
-                className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-              >
-                ログアウト
-              </button>
+            <div className="bg-green-100 p-4 rounded">
+              <h2 className="text-xl">こんにちは、{user.firstName || user.emailAddresses[0].emailAddress}さん</h2>
             </div>
             
             <div className="mt-8">
