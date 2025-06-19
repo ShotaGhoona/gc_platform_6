@@ -10,14 +10,23 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "https://vercel.app"],
+    allow_origins=["http://localhost:3000", "https://vercel.app", "*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-supabase_url = os.environ.get("SUPABASE_URL")
-supabase_key = os.environ.get("SUPABASE_KEY")
+# Environment variables with fallback values
+supabase_url = os.environ.get("SUPABASE_URL") or "https://ufvjbfyuzxhtshbgntxy.supabase.co"
+supabase_key = os.environ.get("SUPABASE_KEY") or "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVmdmpiZnl1enhodHNoYmdudHh5Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1MDMyMTMxOSwiZXhwIjoyMDY1ODk3MzE5fQ.INKNul4D6DICmP-xUGqbRziCDoLSTH263NaxgasR86U"
+
+# Debug: Print environment variables (remove in production)
+print(f"SUPABASE_URL: {supabase_url}")
+print(f"SUPABASE_KEY: {'***' if supabase_key else 'None'}")
+
+if not supabase_url or not supabase_key:
+    raise ValueError("SUPABASE_URL and SUPABASE_KEY must be set")
+
 supabase: Client = create_client(supabase_url, supabase_key)
 
 @app.get("/")
