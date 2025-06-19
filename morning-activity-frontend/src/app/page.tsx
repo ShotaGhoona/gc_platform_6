@@ -38,7 +38,8 @@ export default function Home() {
 
   const fetchTestData = async () => {
     try {
-      const response = await fetch('http://localhost:8000/api/test-data')
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
+      const response = await fetch(`${apiUrl}/api/test-data`)
       const data = await response.json()
       setTestData(data.data || [])
     } catch (error) {
