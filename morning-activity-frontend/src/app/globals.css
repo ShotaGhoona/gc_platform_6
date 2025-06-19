@@ -76,6 +76,16 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  /* App-specific colors */
+  --app-background: oklch(0.99 0 0);
+  --app-surface: oklch(1 0 0);
+  --app-border-light: oklch(0.95 0 0);
+  --header-background: oklch(1 0 0);
+  --header-border: oklch(0.922 0 0);
+  --nav-hover: oklch(0.97 0 0);
+  --nav-active: oklch(0.488 0.243 264.376);
+  --nav-active-foreground: oklch(0.985 0 0);
 }
 
 .dark {
@@ -110,6 +120,16 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+
+  /* App-specific colors - Dark mode */
+  --app-background: oklch(0.145 0 0);
+  --app-surface: oklch(0.205 0 0);
+  --app-border-light: oklch(0.269 0 0);
+  --header-background: oklch(0.205 0 0);
+  --header-border: oklch(1 0 0 / 10%);
+  --nav-hover: oklch(0.269 0 0);
+  --nav-active: oklch(0.488 0.243 264.376);
+  --nav-active-foreground: oklch(0.985 0 0);
 }
 
 @layer base {

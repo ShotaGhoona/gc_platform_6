@@ -1,5 +1,5 @@
-import { Sidebar } from '@/components/display/sidebar'
-import { Header } from '@/components/display/header'
+import Sidebar from "@/components/display/sidebar";
+import Header from "@/components/display/header";
 
 export default function MorningLayout({
   children,
@@ -7,11 +7,11 @@ export default function MorningLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex h-screen bg-[--app-background]">
       <Sidebar />
       <div className="flex-1 flex flex-col overflow-hidden">
         <Header />
-        <main className="flex-1 overflow-auto">
+        <main className="flex-1 overflow-auto bg-background">
           {children}
         </main>
       </div>
